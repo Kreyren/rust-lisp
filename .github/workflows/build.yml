@@ -14,15 +14,28 @@ on:
     types:
       - created
 
-strategy:
-  matrix:
-    runners: [ ubuntu-latest, macos-latest, windows-latest ]
-
 jobs:
-  build:
-    runs-on: ${{ matrix.runners }}
+  debian-build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Pulling git dir..
         uses: actions/checkout@v2
       - name: Building..
-        run: cargo build
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          cargo build
+  macos-build:
+    runs-on: macos-latest
+    steps:
+        uses: actions/checkout@v2
+      - name: Building..
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          cargo build
+  windows-build:
+    runs-on: windows-latest
+    steps:
+        uses: actions/checkout@v2
+      - name: Building..
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          cargo build
