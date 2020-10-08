@@ -21,18 +21,22 @@ jobs:
       - name: Getting git dir..
         uses: actions/checkout@v2
       - name: Building..
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          cargo build
+        run: cd "$GITHUB_WORKSPACE" && cargo build
+      - name: Testing..
+        run: cd "$GITHUB_WORKSPACE" && cargo test
+      - name: Benchmarking..
+        run: cd "$GITHUB_WORKSPACE" && cargo bench
   macos-build:
     runs-on: macos-latest
     steps:
       - name: Getting git dir..
         uses: actions/checkout@v2
       - name: Building..
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          cargo build
+        run: cd "$GITHUB_WORKSPACE" && cargo build
+      - name: Testing..
+        run: cd "$GITHUB_WORKSPACE" && cargo test
+      - name: Benchmarking..
+        run: cd "$GITHUB_WORKSPACE" && cargo bench
   windows-build:
     runs-on: windows-latest
     steps:
@@ -42,3 +46,11 @@ jobs:
         run: |
           cd "$env:GITHUB_WORKSPACE"
           cargo build
+      - name: Testing..
+        run: |
+          cd "$env:GITHUB_WORKSPACE"
+          cargo test
+      - name: Benchmarking..
+        run: |
+          cd "$env:GITHUB_WORKSPACE"
+          cargo bench
