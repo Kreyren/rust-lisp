@@ -18,6 +18,7 @@ jobs:
   debian-build:
     runs-on: ubuntu-latest
     steps:
+      - name: Getting git dir..
         uses: actions/checkout@v2
       - name: Building..
         run: |
@@ -26,6 +27,7 @@ jobs:
   macos-build:
     runs-on: macos-latest
     steps:
+      - name: Getting git dir..
         uses: actions/checkout@v2
       - name: Building..
         run: |
@@ -34,6 +36,7 @@ jobs:
   windows-build:
     runs-on: windows-latest
     steps:
+      - name: Getting git dir..
         uses: actions/checkout@v2
       - name: Building..
         run: |
