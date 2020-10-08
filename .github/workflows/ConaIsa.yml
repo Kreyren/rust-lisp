@@ -1,0 +1,53 @@
+# Inspired by configuration made for cargo-make by Sagie Gur-Ari <https://github.com/sagiegurari/cargo-make/blob/master/.github/workflows/ci.yml>
+name: ConaIsa
+
+# Relevant to events - https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [synchronize, opened, reopened, ready_for_review]
+    paths:
+    - 'src/**.rs'
+    - 'Cargo.toml'
+  release:
+    types:
+      - created
+
+env:
+  CLICOLOR_FORCE: 1
+
+jobs:
+  CI:
+    name: ConaIsa
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    steps:
+    - name: Checking github directory..
+      uses: actions/checkout@v2
+    - name: Installing rustlang backend..
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: ${{ matrix.rust }}
+        profile: minimal
+        override: true
+    - name: Running CI..
+      if: matrix.rust == 'stable' || matrix.rust == 'beta'
+      uses: actions-rs/cargo@v1
+      with:
+        command: run
+    - name: Running CI.. (Allow Failures)
+      if: matrix.rust == 'nightly'
+      continue-on-error: true
+      uses: actions-rs/cargo@v1
+      with:
+        command: run
+    - name: Running CI (Minimal Supported Rust Version)
+      if: matrix.rust != 'stable' && matrix.rust != 'beta' && matrix.rust != 'nightly'
+      uses: actions-rs/cargo@v1
+      with:
+        command: run
