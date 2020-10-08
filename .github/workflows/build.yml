@@ -22,6 +22,7 @@ jobs:
   build:
     runs-on: ${{ matrix.runners }}
     steps:
-      - name: Building..
+      - name: Pulling git dir..
         uses: actions/checkout@v2
+      - name: Building..
         run: cargo build
