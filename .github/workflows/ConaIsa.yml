@@ -1,4 +1,4 @@
-name: Build
+name: ConaIsa
 
 # Relevant to events - https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows
 on: 
@@ -15,7 +15,7 @@ on:
       - created
 
 jobs:
-  debian-build:
+  ubuntu:
     runs-on: ubuntu-latest
     steps:
       - name: Getting git dir..
@@ -26,7 +26,7 @@ jobs:
         run: cd "$GITHUB_WORKSPACE" && cargo test
       - name: Benchmarking..
         run: cd "$GITHUB_WORKSPACE" && cargo bench
-  macos-build:
+  macos:
     runs-on: macos-latest
     steps:
       - name: Getting git dir..
@@ -37,7 +37,7 @@ jobs:
         run: cd "$GITHUB_WORKSPACE" && cargo test
       - name: Benchmarking..
         run: cd "$GITHUB_WORKSPACE" && cargo bench
-  windows-build:
+  windows:
     runs-on: windows-latest
     steps:
       - name: Getting git dir..
