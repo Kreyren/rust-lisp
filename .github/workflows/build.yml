@@ -1,0 +1,27 @@
+name: Build
+
+# Relevant to events - https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [synchronize, opened, reopened, ready_for_review]
+    paths:
+    - 'src/**.rs'
+    - 'Cargo.toml'
+  release:
+    types:
+      - created
+
+strategy:
+  matrix:
+    runners: [ ubuntu-latest, macos-latest, windows-latest ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.runners }}
+    steps:
+      - name: Building..
+        uses: actions/checkout@v2
+        run: cargo build
